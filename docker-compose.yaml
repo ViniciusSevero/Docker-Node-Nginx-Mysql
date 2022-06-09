@@ -11,7 +11,7 @@ services:
       - MYSQL_DATABASE=nodedb
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
       - node-network
     ports:
@@ -25,8 +25,6 @@ services:
     container_name: app
     entrypoint: dockerize -wait tcp://db:3306 -timeout 60s docker-entrypoint.sh node index.js
     tty: true
-    volumes:
-      - ./node:/usr/src/app
     networks:
       - node-network
 
